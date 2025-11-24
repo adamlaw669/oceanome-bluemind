@@ -1,4 +1,4 @@
-# 🌊 BlueMind Ocean Restoration Platform
+# BlueMind Ocean Restoration Platform
 
 > AI-powered platform for ocean microbiome monitoring and restoration
 
@@ -7,21 +7,21 @@
 ![Python](https://img.shields.io/badge/python-3.9+-blue)
 ![Node](https://img.shields.io/badge/node-18+-green)
 
-## 📋 Overview
+## Overview
 
 BlueMind is a comprehensive platform that combines IoT sensors, AI/ML predictions, and digital twin simulations to monitor and restore ocean microbiomes. The platform helps researchers and organizations track carbon sequestration, analyze microbe populations, and make data-driven decisions for ocean health.
 
 ### Key Features
 
-- 🌊 **Real-time Ocean Simulations** - Digital twin modeling of ocean microbiomes
-- 📡 **IoT Sensor Integration** - Live data streaming from ocean monitoring stations
-- 🤖 **AI-Powered Predictions** - Machine learning models for carbon sequestration forecasting
-- 🧬 **Bio-agent Tracking** - Monitor and deploy beneficial microorganisms
-- 📊 **Interactive Dashboards** - Comprehensive analytics and visualizations
-- 🔬 **Scientific Tools** - Action lab for experiments and scenario testing
-- 📚 **Educational Content** - Learn about ocean microbiomes and restoration
+-  **Real-time Ocean Simulations** - Digital twin modeling of ocean microbiomes
+-  **IoT Sensor Integration** - Live data streaming from ocean monitoring stations
+-  **AI-Powered Predictions** - Machine learning models for carbon sequestration forecasting
+-  **Bio-agent Tracking** - Monitor and deploy beneficial microorganisms
+-  **Interactive Dashboards** - Comprehensive analytics and visualizations
+-  **Scientific Tools** - Action lab for experiments and scenario testing
+-  **Educational Content** - Learn about ocean microbiomes and restoration
 
-## 🏗️ Architecture
+##  Architecture
 
 The platform consists of two main components:
 
@@ -68,7 +68,7 @@ bluemind/
 └── README.md              # This file
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -144,7 +144,7 @@ Frontend will be available at: http://localhost:3000
 3. Create an account with email and password
 4. Login and explore the platform!
 
-## 🐳 Docker Development
+##  Docker Development
 
 Run both services with Docker Compose:
 
@@ -164,7 +164,7 @@ Services will be available at:
 - Backend: http://localhost:8000
 - API Docs: http://localhost:8000/docs
 
-## 📦 Deployment
+##  Deployment
 
 ### Deploy to Render
 
@@ -236,7 +236,7 @@ openssl rand -hex 32
 
 See `backend/.env.example` for all available options.
 
-## 🧪 Testing
+##  Testing
 
 ### Backend Tests
 
@@ -255,7 +255,7 @@ cd frontend
 npm run lint
 ```
 
-## 📊 API Endpoints
+##  API Endpoints
 
 ### Authentication
 - `POST /api/v1/auth/signup` - Create account
@@ -281,7 +281,7 @@ npm run lint
 
 See the [API Documentation](http://localhost:8000/docs) for complete details.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 - **Framework**: Next.js 16.0.0
@@ -302,7 +302,7 @@ See the [API Documentation](http://localhost:8000/docs) for complete details.
 - **Data Science**: NumPy, Pandas, Scikit-learn
 - **Server**: Uvicorn
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions! Here's how you can help:
 
@@ -320,7 +320,7 @@ We welcome contributions! Here's how you can help:
 - Update documentation as needed
 - Keep code DRY (Don't Repeat Yourself)
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Common Issues
 
@@ -344,7 +344,7 @@ We welcome contributions! Here's how you can help:
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for more troubleshooting tips.
 
-## 📈 Roadmap
+##  Roadmap
 
 - [ ] Mobile app (React Native)
 - [ ] Advanced AI models for prediction accuracy
@@ -354,30 +354,30 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for more troubleshooting tips.
 - [ ] Enhanced data export capabilities
 - [ ] 3D visualization of ocean zones
 
-## 📄 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👏 Acknowledgments
+##  Acknowledgments
 
 - Ocean conservation researchers and scientists
 - Open-source community
 - FastAPI and Next.js teams
 - All contributors to this project
 
-## 📞 Support
+##  Support
 
 - **Documentation**: Check the docs folder
 - **Issues**: [GitHub Issues](https://github.com/yourusername/bluemind/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/yourusername/bluemind/discussions)
 - **Email**: support@bluemind.example.com
 
-## 🌟 Star Us!
+##  Star Us!
 
 If you find this project useful, please consider giving it a star on GitHub! It helps others discover the project.
 
 ---
 
-**Made with 💙 for the ocean**
+**Made for the ocean**
 
-*BlueMind - Restoring our oceans, one microbe at a time* 🌊
+*BlueMind - Restoring our oceans, one microbe at a time* 
