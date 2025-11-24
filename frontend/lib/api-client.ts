@@ -1,9 +1,91 @@
-"""API client for BlueMind backend"""
+// API client for BlueMind backend
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1"
 
 interface ApiError {
   detail: string
+}
+
+// API response types
+export interface SimulationResponse {
+  id: number
+  user_id: number
+  name: string
+  description?: string
+  scenario_type?: string
+  temperature: number
+  nutrients: number
+  light: number
+  salinity: number
+  ph: number
+  dissolved_oxygen: number
+  week: number
+  phytoplankton: number
+  zooplankton: number
+  bacteria: number
+  carbon_sequestration_rate: number
+  biodiversity_index: number
+  ecosystem_health_score: number
+  is_running: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface SensorZoneResponse {
+  id: number
+  user_id: number
+  name: string
+  location: string
+  latitude: number
+  longitude: number
+  depth?: number
+  created_at: string
+}
+
+export interface SensorReadingResponse {
+  zone_id: number
+  temperature: number
+  salinity: number
+  ph: number
+  dissolved_oxygen: number
+  chlorophyll: number
+  turbidity: number
+  timestamp: string
+}
+
+export interface DashboardStatsResponse {
+  total_simulations: number
+  active_sensors: number
+  total_carbon_sequestered: number
+  average_ecosystem_health: number
+  total_microbe_populations: number
+}
+
+export interface UserResponse {
+  id: number
+  email: string
+  name?: string
+}
+
+export interface AuthResponse {
+  access_token: string
+  token_type: string
+}
+
+export interface SimulationHistoryResponse {
+  week: number
+  temperature: number
+  nutrients: number
+  phytoplankton: number
+  zooplankton: number
+  bacteria: number
+  carbon_sequestration: number
+  biodiversity_index: number
+  ecosystem_health: number
+}
+
+export interface SimulationWithHistory extends SimulationResponse {
+  history: SimulationHistoryResponse[]
 }
 
 class ApiClient {
@@ -34,9 +116,9 @@ class ApiClient {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      ...options.headers,
+      ...(options.headers as Record<string, string>),
     }
 
     if (this.token) {
@@ -66,14 +148,14 @@ class ApiClient {
   // ========== Auth APIs ==========
 
   async signup(email: string, password: string, name: string) {
-    return this.request<{ id: number; email: string; name: string }>("/auth/signup", {
+    return this.request<UserResponse>("/auth/signup", {
       method: "POST",
       body: JSON.stringify({ email, password, name }),
     })
   }
 
   async login(email: string, password: string) {
-    const response = await this.request<{ access_token: string; token_type: string }>(
+    const response = await this.request<AuthResponse>(
       "/auth/login-json",
       {
         method: "POST",
@@ -85,7 +167,7 @@ class ApiClient {
   }
 
   async getCurrentUser() {
-    return this.request<{ id: number; email: string; name?: string }>("/auth/me")
+    return this.request<UserResponse>("/auth/me")
   }
 
   logout() {
@@ -103,18 +185,18 @@ class ApiClient {
     light?: number
     salinity?: number
   }) {
-    return this.request("/simulations", {
+    return this.request<SimulationResponse>("/simulations", {
       method: "POST",
       body: JSON.stringify(data),
     })
   }
 
   async getSimulations() {
-    return this.request<any[]>("/simulations")
+    return this.request<SimulationResponse[]>("/simulations")
   }
 
   async getSimulation(id: number) {
-    return this.request(`/simulations/${id}`)
+    return this.request<SimulationWithHistory>(`/simulations/${id}`)
   }
 
   async updateSimulation(id: number, data: {
@@ -124,32 +206,32 @@ class ApiClient {
     light?: number
     salinity?: number
   }) {
-    return this.request(`/simulations/${id}`, {
+    return this.request<SimulationResponse>(`/simulations/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
     })
   }
 
   async stepSimulation(id: number, weeks: number = 1) {
-    return this.request(`/simulations/${id}/step?weeks=${weeks}`, {
+    return this.request<SimulationResponse>(`/simulations/${id}/step?weeks=${weeks}`, {
       method: "POST",
     })
   }
 
   async resetSimulation(id: number) {
-    return this.request(`/simulations/${id}/reset`, {
+    return this.request<SimulationResponse>(`/simulations/${id}/reset`, {
       method: "POST",
     })
   }
 
   async deleteSimulation(id: number) {
-    return this.request(`/simulations/${id}`, {
+    return this.request<void>(`/simulations/${id}`, {
       method: "DELETE",
     })
   }
 
   async predictFuture(id: number, weeks_ahead: number = 4) {
-    return this.request(`/simulations/${id}/predict?weeks_ahead=${weeks_ahead}`, {
+    return this.request<any>(`/simulations/${id}/predict?weeks_ahead=${weeks_ahead}`, {
       method: "POST",
     })
   }
@@ -163,32 +245,32 @@ class ApiClient {
     longitude: number
     depth?: number
   }) {
-    return this.request("/sensors/zones", {
+    return this.request<SensorZoneResponse>("/sensors/zones", {
       method: "POST",
       body: JSON.stringify(data),
     })
   }
 
   async getSensorZones() {
-    return this.request<any[]>("/sensors/zones")
+    return this.request<SensorZoneResponse[]>("/sensors/zones")
   }
 
   async getSensorZone(id: number) {
-    return this.request(`/sensors/zones/${id}`)
+    return this.request<SensorZoneResponse>(`/sensors/zones/${id}`)
   }
 
   async getCurrentReading(zoneId: number) {
-    return this.request(`/sensors/zones/${zoneId}/current`)
+    return this.request<SensorReadingResponse>(`/sensors/zones/${zoneId}/current`)
   }
 
   async deleteSensorZone(id: number) {
-    return this.request(`/sensors/zones/${id}`, {
+    return this.request<void>(`/sensors/zones/${id}`, {
       method: "DELETE",
     })
   }
 
   async simulateEvent(zoneId: number, eventType: string) {
-    return this.request(`/sensors/zones/${zoneId}/simulate-event?event_type=${eventType}`, {
+    return this.request<SensorReadingResponse>(`/sensors/zones/${zoneId}/simulate-event?event_type=${eventType}`, {
       method: "POST",
     })
   }
@@ -196,13 +278,7 @@ class ApiClient {
   // ========== Dashboard APIs ==========
 
   async getDashboardStats() {
-    return this.request<{
-      total_simulations: number
-      active_sensors: number
-      total_carbon_sequestered: number
-      average_ecosystem_health: number
-      total_microbe_populations: number
-    }>("/dashboard/stats")
+    return this.request<DashboardStatsResponse>("/dashboard/stats")
   }
 
   // ========== WebSocket ==========

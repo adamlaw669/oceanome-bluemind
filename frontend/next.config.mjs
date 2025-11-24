@@ -3,13 +3,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
   images: {
     unoptimized: true,
   },
-  output: 'standalone',
   // Enable compression
   compress: true,
   // Production optimizations
