@@ -48,7 +48,14 @@ export default function LoginPage() {
         </div>
 
         <h1 className="text-2xl font-bold text-foreground text-center mb-2">Welcome Back</h1>
-        <p className="text-muted-foreground text-center mb-8">Sign in to your account</p>
+        <p className="text-muted-foreground text-center mb-4">Sign in to your account</p>
+
+        {/* Demo Account Info */}
+        <div className="bg-accent/10 border border-accent/30 rounded-lg p-3 mb-6">
+          <p className="text-sm font-medium text-accent mb-1">✨ Try the Demo Account</p>
+          <p className="text-xs text-muted-foreground">Email: demo@bluemind.com</p>
+          <p className="text-xs text-muted-foreground">Password: demo123</p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
