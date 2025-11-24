@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Git
+.git/
+.gitignore
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+.next/
+build/
+dist/
+out/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Documentation (not needed in container)
+*.md
+docs/
+
+# Tests
+*.test.*
+test/
+tests/
+__tests__/
+.pytest_cache/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Misc
+coverage/
+.coverage

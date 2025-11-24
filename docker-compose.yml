@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bluemind-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=dev-secret-key-for-docker
+      - DATABASE_URL=sqlite+aiosqlite:///./bluemind.db
+      - ALLOWED_ORIGINS=http://localhost:3000,http://frontend:3000
+      - ENABLE_AI_PREDICTIONS=True
+      - ENABLE_SENSOR_SIMULATION=True
+    volumes:
+      - ./backend:/app
+      - backend-db:/app/data
+    networks:
+      - bluemind-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend Web Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bluemind-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - bluemind-network
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  bluemind-network:
+    driver: bridge
+
+volumes:
+  backend-db:
+    driver: local

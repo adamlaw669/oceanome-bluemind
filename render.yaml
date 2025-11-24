@@ -1,0 +1,55 @@
+services:
+  # Backend API Service
+  - type: web
+    name: bluemind-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        sync: false  # Set this manually to your frontend URL
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bluemind-db
+          property: connectionString
+      - key: ENABLE_AI_PREDICTIONS
+        value: true
+      - key: ENABLE_SENSOR_SIMULATION
+        value: true
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 30
+      - key: MODEL_UPDATE_INTERVAL
+        value: 300
+      - key: SENSOR_UPDATE_INTERVAL
+        value: 5
+    healthCheckPath: /health
+
+  # Frontend Web Service
+  - type: web
+    name: bluemind-frontend
+    runtime: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        sync: false  # Set this manually to your backend URL
+
+databases:
+  # PostgreSQL Database (optional but recommended for production)
+  - name: bluemind-db
+    databaseName: bluemind
+    plan: free
+    # Note: The free plan includes 90 days of database storage
+    # For persistent storage, upgrade to a paid plan
